@@ -1,0 +1,237 @@
+# Resumen General del CRM — Sagrada Madre
+
+## Arquitectura del Sistema
+
+| Capa | Tecnología | Estado |
+|------|-----------|--------|
+| **Frontend** | Angular 16 + Tailwind CSS | ✅ Implementado |
+| **Backend** | Java + Spring Boot | 🔲 Pendiente |
+| **Hosting** | Firebase Hosting | ✅ Desplegado |
+| **Datos actuales** | Mock con RxJS BehaviorSubject | ✅ Reactivo |
+
+---
+
+## Estructura de Componentes
+
+```mermaid
+graph TD
+    subgraph AppModule["AppModule (Raíz)"]
+        APP["AppComponent<br/>Sidebar + Topbar + Login"]
+        
+        APP --> ROUTER["router-outlet"]
+        
+        ROUTER --> HOME["HomeComponent<br/>/ y /home"]
+        ROUTER --> DIR["DirectorioComponent<br/>/directorio"]
+        ROUTER --> MET["MetricasComponent<br/>/metricas"]
+        ROUTER --> CONF["ConfiguracionComponent<br/>/configuracion"]
+        
+        HOME --> CLI["ClienteListComponent<br/>(embebido)"]
+        HOME --> KAN["KanbanBoardComponent<br/>(embebido)"]
+    end
+    
+    style APP fill:#4A2B65,stroke:#333,color:#fff
+    style HOME fill:#6B46A0,stroke:#333,color:#fff
+    style DIR fill:#6B46A0,stroke:#333,color:#fff
+    style MET fill:#6B46A0,stroke:#333,color:#fff
+    style CONF fill:#6B46A0,stroke:#333,color:#fff
+    style CLI fill:#8B6BB0,stroke:#333,color:#fff
+    style KAN fill:#8B6BB0,stroke:#333,color:#fff
+```
+
+---
+
+## Flujo de Navegación (Sidebar)
+
+```mermaid
+flowchart LR
+    LOGIN["🔐 Login<br/>(Modal)"] --> |Credenciales| SB["Sidebar"]
+    
+    SB --> |Dashboard| HOME["🏠 Dashboard<br>/home"]
+    SB --> |Directorio| DIR["📁 Directorio<br/>/directorio"]
+    SB --> |Métricas| MET["📊 Métricas<br/>/metricas"]
+    SB --> |Config| CONF["⚙️ Configuración<br/>/configuracion"]
+    
+    HOME --> KPI["KPIs Cards"]
+    HOME --> CLIENTES["Lista Clientes"]
+    HOME --> KANBAN["Pipeline Kanban<br/>Drag & Drop"]
+    
+    DIR --> TABLA["Tabla de Clientes<br/>+ Búsqueda + Filtros"]
+    DIR --> DETALLE["Panel Detalle<br/>Cliente Seleccionado"]
+    
+    MET --> M1["KPIs Financieros"]
+    MET --> M2["Embudo de Ventas"]
+    MET --> M3["Distribución Pipeline"]
+    MET --> M4["Top 5 Oportunidades"]
+    MET --> M5["Clientes Más Activos"]
+    MET --> M6["Timeline Actividad"]
+    
+    CONF --> C1["Perfil Admin<br/>+ Upload Avatar"]
+    CONF --> C2["Datos Empresa"]
+    CONF --> C3["Etapas Pipeline"]
+    CONF --> C4["Próximamente 🔒"]
+```
+
+---
+
+## Flujo de Datos
+
+```mermaid
+flowchart TD
+    subgraph DataService["DataService (mock-data.service.ts)"]
+        CS["clientesSubject<br/>BehaviorSubject&lt;Cliente[]&gt;"]
+        TS["tratosSubject<br/>BehaviorSubject&lt;Trato[]&gt;"]
+        BS["busquedaGlobalSubject<br/>BehaviorSubject&lt;string&gt;"]
+    end
+    
+    CS --> |clientes$| HOME["HomeComponent"]
+    CS --> |clientes$| DIR["DirectorioComponent"]
+    CS --> |clientes$| MET["MetricasComponent"]
+    CS --> |clientes$| KAN["KanbanBoardComponent"]
+    
+    TS --> |tratos$| HOME
+    TS --> |tratos$| MET
+    TS --> |tratos$| KAN
+    
+    BS --> |busquedaGlobal$| CLI["ClienteListComponent"]
+    
+    KAN --> |addTrato()| TS
+    KAN --> |updateTratoEtapa()| TS
+    HOME --> |addCliente()| CS
+    
+    style DataService fill:#1e293b,stroke:#334155,color:#f1f5f9
+```
+
+---
+
+## Modelos de Datos
+
+```mermaid
+classDiagram
+    class Cliente {
+        +string id
+        +string nombre
+        +string empresa
+        +string avatar
+        +string estado: Activo | Inactivo
+        +string ultimaInteraccion
+        +string email (opcional)
+        +string telefono (opcional)
+    }
+    
+    class Trato {
+        +string id
+        +string nombre
+        +number monto
+        +EtapaTrato etapa
+        +string clienteId
+        +string empresa
+    }
+    
+    class Kpi {
+        +string titulo
+        +string|number valor
+        +number tendencia
+        +string icono
+    }
+    
+    class EtapaTrato {
+        <<enumeration>>
+        Prospecto
+        Negociación
+        Propuesta
+        Cerrado
+    }
+    
+    Trato --> EtapaTrato
+    Trato --> Cliente : clienteId
+```
+
+---
+
+## Detalle por Página
+
+### 1. Login (Modal en AppComponent)
+- Modal con glassmorphism sobre fondo blur
+- Formulario email + contraseña
+- Opción de registro de nuevo admin
+- Login mock directo (sin validar credenciales)
+- Guarda `nombreAdmin` para mostrarlo en topbar
+
+### 2. Dashboard (`/home` — HomeComponent)
+- **4 KPIs** con íconos y tendencias porcentuales
+- **Lista de Clientes** con búsqueda global reactiva
+- **Pipeline Kanban** con 4 columnas (Prospecto → Cerrado)
+  - Drag & Drop entre columnas (Angular CDK)
+  - Botón "+Nuevo Trato" con modal
+  - Autocomplete de clientes con buscador integrado
+
+### 3. Directorio (`/directorio` — DirectorioComponent)
+- Tabla completa de clientes
+- Búsqueda y filtros por estado
+- Panel lateral con detalle del cliente seleccionado
+- Enlace directo a WhatsApp
+
+### 4. Métricas (`/metricas` — MetricasComponent)
+- **KPIs Financieros**: Pipeline Total, Ingresos Cerrados, Ticket Promedio, Tasa de Conversión
+- **Embudo de Ventas**: Gráfico trapezoidal CSS puro con porcentajes
+- **Distribución del Pipeline**: Barras horizontales animadas por monto
+- **Top 5 Oportunidades**: Tabla con ranking, empresa, etapa y monto
+- **Clientes Más Activos**: Ranking con avatar y totales
+- **Actividad Reciente**: Timeline vertical con íconos
+
+### 5. Configuración (`/configuracion` — ConfiguracionComponent)
+- **Perfil Admin**: Nombre, email, teléfono, contraseña. Upload avatar local (FileReader → base64)
+- **Datos Empresa**: Nombre comercial, razón social, CUIT, dirección, teléfono, sitio web
+- **Etapas Pipeline**: Lista editable — agregar/eliminar etapas con colores
+- **Próximamente** (6 cards con candado): Gestión de Usuarios, Notificaciones, Modo Oscuro, Integraciones, Exportar Datos, Auditoría
+
+---
+
+## Servicios
+
+| Servicio | Archivo | Responsabilidad |
+|----------|---------|----------------|
+| [DataService](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/services/mock-data.service.ts#28-80) | [mock-data.service.ts](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/services/mock-data.service.ts) | Datos reactivos de clientes, tratos y KPIs (BehaviorSubject) |
+| [AuthService](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/services/auth.service.ts#11-49) | [auth.service.ts](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/services/auth.service.ts) | Autenticación (preparado para JWT + Spring) |
+| [NotificationService](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/services/notification.service.ts#17-51) | [notification.service.ts](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/services/notification.service.ts) | Toast de notificaciones del sistema |
+
+## Pipes
+
+| Pipe | Archivo | Función |
+|------|---------|---------|
+| [PhonePipe](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/pipes/phone.pipe.ts#3-50) | [phone.pipe.ts](file:///c:/Users/rodri/Desktop/nc-equipo-5/frontend/src/app/pipes/phone.pipe.ts) | Formatea teléfonos al formato internacional (+54 9 11 ...) |
+
+---
+
+## Mapa de Archivos
+
+```
+frontend/src/app/
+├── app.component.ts/html/css     ← Shell (sidebar + topbar + login + router-outlet)
+├── app.module.ts                 ← Módulo raíz (8 declaraciones)
+├── app-routing.module.ts         ← 5 rutas
+├── cliente-list.component.ts     ← Componente embebido en Home
+├── kanban-board.component.ts     ← Componente embebido en Home
+├── models/
+│   └── models.ts                 ← Cliente, Trato, Kpi, EtapaTrato
+├── services/
+│   ├── mock-data.service.ts      ← DataService (BehaviorSubjects)
+│   ├── auth.service.ts           ← AuthService
+│   └── notification.service.ts   ← NotificationService
+├── pipes/
+│   └── phone.pipe.ts             ← PhonePipe
+└── components/
+    ├── home/                     ← Dashboard principal
+    ├── directorio/               ← Tabla de clientes
+    ├── metricas/                 ← Analítica y gráficos CSS
+    └── configuracion/            ← Ajustes del sistema
+```
+
+---
+
+## Estado del Despliegue
+
+| Recurso | URL |
+|---------|-----|
+| **Firebase Hosting** | https://crm-enterprise-2100.web.app |
+| **Proyecto Firebase** | crm-enterprise-2100 |
