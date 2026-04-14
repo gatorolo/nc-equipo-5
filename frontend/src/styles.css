@@ -1,0 +1,98 @@
+/* Escalado global de accesibilidad (Aumento del 20%) */
+html {
+  font-size: 120%;
+}
+
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables base de Sagrada Madre (Modo Claro) */
+:root {
+  --sagrada-bg: #f0e3d2;
+  --sagrada-paper: #fbf7f1;
+  --sagrada-purple: #694a7e;
+  --sagrada-purple-dark: #513763;
+  --sagrada-gold: #9e7d44; /* Oscurecido ligeramente de #b99557 para mejor contraste */
+  --sagrada-gold-hover: #856837;
+  --accessibility-gold: #7d6132; /* Tono más profundo para texto sobre fondo claro */
+}
+
+/* FIX LUPA: Forzar visibilidad de iconos de acción (hover) dentro de la lente */
+#lupa-lens-container .group-hover\:opacity-100 {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+#lupa-lens-container .opacity-0 {
+  opacity: 1 !important;
+}
+
+/* Mejoras de contraste para Accesibilidad (WCAG AA) */
+.text-slate-400 { color: #52525b !important; } /* Más oscuro que el default para legibilidad */
+.text-slate-500 { color: #3f3f46 !important; }
+.text-slate-600 { color: #27272a !important; }
+
+/* Enfoque visible para navegación por teclado */
+:focus-visible {
+  outline: 2px solid var(--sagrada-purple);
+  outline-offset: 2px;
+}
+
+/* Modo oscuro elegante (Amatista oscuro) */
+.dark {
+  --sagrada-bg: #1A1625;
+  --sagrada-paper: #262134;
+  --sagrada-purple: #9d7bcc;
+  --sagrada-purple-dark: #b89ce6;
+  --sagrada-gold: #D4AF37;
+  --sagrada-gold-hover: #EAB308;
+  
+  /* Overrides for standard tailwind colors generated dynamically by classes in dark mode */
+  background-color: var(--sagrada-bg) !important;
+  color: #F3F0F5 !important;
+}
+
+.dark .text-slate-400 { color: #A1A1AA !important; }
+.dark .text-slate-500 { color: #D4D4D8 !important; }
+.dark .text-slate-600 { color: #E4E4E7 !important; }
+
+/* Forzar fondos oscuros en utilidades comunes si estamos en dark */
+.dark .bg-white { background-color: var(--sagrada-paper) !important; }
+.dark .text-slate-800, .dark .text-slate-700, .dark .text-slate-900, .dark .text-slate-600 { color: #F8FAFC !important; }
+.dark .bg-slate-50, .dark .bg-slate-100, .dark .hover\:bg-sagrada-bg:hover { background-color: rgba(255, 255, 255, 0.05) !important; }
+.dark .border-slate-100, .dark .border-slate-200 { border-color: rgba(255, 255, 255, 0.1) !important; }
+
+/* Corrección de tarjetas personalizadas */
+.dark .bg-sagrada-paper {
+  background-color: var(--sagrada-paper) !important;
+  color: #F3F0F5 !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+.dark .bg-sagrada-bg {
+  background-color: var(--sagrada-bg) !important;
+}
+
+/* Utilitario para Lectores de Pantalla (Accesibilidad) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Optimización de Rendering */
+img {
+  content-visibility: auto;
+}
+
+/* Fuentes: Forzar swap para evitar bloqueo de renderizado */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+}

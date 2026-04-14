@@ -1,0 +1,74 @@
+<div class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-8 bg-sagrada-bg w-full relative">
+    <div class="max-w-7xl mx-auto flex flex-col gap-10">
+
+        <div *ngIf="kpis.length > 0 && kpis[0].valor !== 0" class="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Pipeline Overview</h1>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">Aquí tienes un resumen actualizado de tu negocio hoy.</p>
+            </div>
+            <button (click)="abrirModal()" aria-label="Crear nuevo trato de venta"
+                class="bg-sagrada-gold hover:bg-sagrada-gold-hover text-white px-5 py-2.5 rounded-xl shadow-sm text-sm font-semibold transition-all transform hover:-translate-y-0.5 whitespace-nowrap">
+                + Nuevo Trato
+            </button>
+        </div>
+
+        <!-- Professional Empty State for onboarding -->
+        <div *ngIf="kpis.length === 0 || (kpis.length > 0 && kpis[0].valor == 0 && kpis[1].valor == 0)" 
+             class="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl p-10 rounded-3xl border border-white/40 dark:border-slate-800 text-center shadow-xl animate-fade-in">
+            <div class="mb-6 inline-flex p-5 bg-sagrada-purple/10 rounded-full text-sagrada-purple animate-bounce">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-black text-slate-800 dark:text-white mb-4">¡Bienvenido a tu nuevo CRM!</h2>
+            <p class="text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-8 text-lg">
+                Todavía no tienes datos para mostrar. Comienza registrando un cliente y creando tu primer trato para ver las métricas en tiempo real.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button (click)="abrirModal()" class="bg-sagrada-purple hover:bg-sagrada-purple-dark text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-purple-900/20 transition-all transform hover:scale-105">
+                    Crear mi primer Trato
+                </button>
+            </div>
+        </div>
+
+        <h2 class="sr-only">Resumen de Indicadores Clave</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div *ngFor="let kpi of kpis"
+                class="bg-sagrada-paper p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group relative"
+                [ngClass]="{'z-50 scale-105 shadow-2xl': isKpiExpanded(kpi.titulo), 'z-10': !isKpiExpanded(kpi.titulo)}">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-slate-500 text-sm font-semibold">{{ kpi.titulo }}</h3>
+                    <button (click)="toggleKpi(kpi.titulo)" [attr.aria-label]="'Ver detalles de ' + kpi.titulo" title="Ver Detalles"
+                        class="p-2.5 bg-sagrada-purple/10 text-sagrada-purple rounded-lg hover:scale-105 hover:bg-sagrada-purple hover:text-white transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-sagrada-purple/30">
+                        <svg class="w-5 h-5 transition-transform duration-300" [class.rotate-90]="isKpiExpanded(kpi.titulo)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-3xl font-bold text-slate-800">{{ kpi.valor }}</p>
+                <p class="text-sm mt-3 flex items-center font-medium"
+                    [ngClass]="kpi.tendencia > 0 ? 'text-emerald-500' : 'text-red-500'">
+                    <span>{{ kpi.tendencia > 0 ? '+' : '' }}{{ kpi.tendencia }}%</span>
+                    <span class="text-slate-400 ml-2 font-normal">vs mes anterior</span>
+                </p>
+
+                <div *ngIf="isKpiExpanded(kpi.titulo)" class="absolute left-0 right-0 top-[102%] bg-sagrada-paper dark:bg-slate-800 p-4 rounded-b-xl shadow-2xl border border-slate-100 dark:border-slate-700 animate-fade-in-down z-50">
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mb-2">Resumen Detallado</p>
+                    <div class="text-xs text-slate-600 dark:text-slate-300">
+                        <p *ngIf="kpi.tendencia === 0">No hay cambios significativos respecto al mes anterior.</p>
+                        <p *ngIf="kpi.tendencia > 0">Presentas un crecimiento del <strong>{{ kpi.tendencia | number:'1.1-1' }}%</strong> impulsado por nuevas actividades.</p>
+                        <p *ngIf="kpi.tendencia < 0">Hay una disminución del <strong>{{ kpi.tendencia | number:'1.1-1' }}%</strong> sugerimos revisar el pipeline.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <app-cliente-list></app-cliente-list>
+
+        <app-kanban-board></app-kanban-board>
+
+    </div>
+</div>

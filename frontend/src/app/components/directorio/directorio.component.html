@@ -1,0 +1,242 @@
+<div class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-8 bg-sagrada-bg w-full relative h-full">
+  <div class="max-w-7xl mx-auto space-y-8">
+    
+    <!-- Header Directorio -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-slate-800 tracking-tight">Directorio de Clientes</h1>
+        <p class="text-slate-500 mt-1">Gestiona todos tus contactos y visualiza su información rápidamente.</p>
+      </div>
+      <button (click)="abrirModalNuevoCliente()" aria-label="Añadir un nuevo cliente al directorio"
+          class="bg-sagrada-purple hover:bg-sagrada-purple-dark text-white px-5 py-2.5 rounded-xl shadow-sm shadow-purple-200 text-sm font-semibold transition-all transform hover:-translate-y-0.5 whitespace-nowrap flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          Agendar Cliente
+      </button>
+    </div>
+
+    <h2 class="sr-only">Lista de Clientes Registrados</h2>
+
+    <!-- Grilla de Clientes -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div *ngFor="let c of clientesFiltrados" (click)="verDetalleCliente(c)" 
+           class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 cursor-pointer hover:shadow-lg hover:border-sagrada-purple/30 transition-all group relative overflow-hidden">
+        
+        <div class="flex items-start gap-4 mb-4 relative z-10">
+          <img [src]="c.avatar" alt="" class="w-14 h-14 rounded-full shadow-sm">
+          <div>
+            <h3 class="font-bold text-slate-800 group-hover:text-sagrada-purple transition-colors line-clamp-1">{{ c.nombre }}</h3>
+            <p class="text-xs font-semibold text-slate-500 truncate mt-0.5">{{ c.empresa }}</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center justify-between mt-4 border-t border-slate-50 pt-4 relative z-10">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide"
+            [ngClass]="c.estado === 'Activo' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'">
+            <span class="w-1.5 h-1.5 rounded-full mr-1.5"
+              [ngClass]="c.estado === 'Activo' ? 'bg-green-500' : 'bg-slate-400'"></span>
+            {{ c.estado | uppercase }}
+          </span>
+          <span class="text-[11px] font-semibold text-slate-400 group-hover:text-sagrada-gold transition-colors">VER DETALLES</span>
+        </div>
+        
+        <div class="absolute inset-0 bg-gradient-to-br from-sagrada-purple/0 to-sagrada-purple/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal Detalle Cliente (Card Compacta) -->
+<div *ngIf="clienteSeleccionado" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-fade-in-down">
+  <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden relative">
+    
+    <!-- Botón Cerrar -->
+    <button (click)="cerrarDetalleCliente()" aria-label="Cerrar detalles del cliente" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors z-10">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+    
+    <!-- Header Card -->
+    <div class="bg-sagrada-bg p-6 text-center border-b border-slate-100 relative">
+      <button (click)="editarCliente(clienteSeleccionado)" aria-label="Editar información de este cliente" class="absolute top-4 left-4 p-2 text-slate-400 hover:text-sagrada-purple hover:bg-sagrada-purple/10 rounded-full transition-colors z-10" title="Editar Cliente">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+      </button>
+
+      <img [src]="clienteSeleccionado.avatar" alt="Avatar" class="w-20 h-20 rounded-full mx-auto shadow-md border-4 border-white mb-3 relative z-10">
+      <div class="absolute inset-0 bg-sagrada-purple/5"></div>
+      
+      <h3 class="text-xl font-bold text-slate-800">{{ clienteSeleccionado.nombre }}</h3>
+      <p class="text-sagrada-purple font-semibold text-sm">{{ clienteSeleccionado.empresa }}</p>
+      
+      <span class="inline-flex items-center px-2.5 py-0.5 mt-3 rounded-full text-xs font-semibold shadow-sm"
+        [ngClass]="clienteSeleccionado.estado === 'Activo' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'">
+        <span class="w-1.5 h-1.5 rounded-full mr-1.5"
+          [ngClass]="clienteSeleccionado.estado === 'Activo' ? 'bg-green-500' : 'bg-slate-400'"></span>
+        {{ clienteSeleccionado.estado }}
+      </span>
+    </div>
+
+    <!-- Body Card -->
+    <div class="p-6 space-y-4">
+        <div class="flex items-center justify-between gap-3 w-full">
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-slate-50 rounded-lg text-slate-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </div>
+            <span class="truncate">{{ clienteSeleccionado.email }}</span>
+          </div>
+          <button (click)="abrirModalCorreo(clienteSeleccionado)" class="flex-shrink-0 p-2 text-sagrada-purple hover:bg-sagrada-purple/10 rounded-lg transition-colors border border-sagrada-purple/20 group/btn" title="Redactar Correo">
+            <svg class="w-5 h-5 group-hover/btn:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+          </button>
+        </div>
+      
+      <div *ngIf="clienteSeleccionado.telefono" class="flex items-center gap-3 text-sm text-slate-600">
+        <div class="p-2 bg-slate-50 rounded-lg text-slate-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+        </div>
+        <span>{{ clienteSeleccionado.telefono | phone }}</span>
+      </div>
+
+      <div class="flex items-center gap-3 text-sm text-slate-600">
+        <div class="p-2 bg-slate-50 rounded-lg text-slate-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        </div>
+        <span>Último contacto: {{ clienteSeleccionado.ultimaInteraccion | date:'shortDate' }}</span>
+      </div>
+
+      <div class="pt-4 border-t border-slate-100 mt-6 text-center">
+        <button (click)="eliminarCliente(clienteSeleccionado.id)" class="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors flex items-center justify-center w-full gap-2 p-2 hover:bg-red-50 rounded-xl">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+          Eliminar Cliente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Nuevo Cliente -->
+<div *ngIf="mostrarModalNuevoCliente" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-fade-in-down">
+  <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-8 relative">
+    
+    <button (click)="cerrarModalNuevoCliente()" aria-label="Cerrar modal" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+    
+    <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 bg-sagrada-gold/10 text-sagrada-gold rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-slate-800 tracking-tight">{{ esModoEdicion ? 'Editar Cliente' : 'Agendar Cliente' }}</h2>
+        <p class="text-sm text-slate-500">{{ esModoEdicion ? 'Modifica los datos del cliente' : 'Agrega un nuevo cliente al directorio' }}</p>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-slate-600 font-semibold mb-1">Nombre Completo <span class="text-red-500">*</span></label>
+          <input type="text" [(ngModel)]="nuevoClienteData.nombre" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-sagrada-purple focus:border-sagrada-purple outline-none bg-slate-50 focus:bg-white transition-all">
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 font-semibold mb-1">Empresa <span class="text-red-500">*</span></label>
+          <input type="text" [(ngModel)]="nuevoClienteData.empresa" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-sagrada-purple focus:border-sagrada-purple outline-none bg-slate-50 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-slate-600 font-semibold mb-1">Email <span class="text-red-500">*</span></label>
+          <input type="email" [(ngModel)]="nuevoClienteData.email" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-sagrada-purple focus:border-sagrada-purple outline-none bg-slate-50 focus:bg-white transition-all">
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 font-semibold mb-1">Teléfono <span class="text-red-500">*</span></label>
+          <input type="text" [(ngModel)]="nuevoClienteData.telefono" placeholder="Ej: 5491143211234" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-sagrada-purple focus:border-sagrada-purple outline-none bg-slate-50 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-slate-600 dark:text-slate-400 font-semibold mb-1">Estado</label>
+          <select [(ngModel)]="nuevoClienteData.estado" 
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-sagrada-purple focus:border-sagrada-purple outline-none bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-700 transition-all appearance-none cursor-pointer">
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600 dark:text-slate-400 font-semibold mb-1">Género (Avatar)</label>
+          <select [(ngModel)]="nuevoClienteData.genero" 
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-sagrada-purple focus:border-sagrada-purple outline-none bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-700 transition-all appearance-none cursor-pointer">
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pt-4 flex justify-end gap-3 mt-6">
+        <button (click)="cerrarModalNuevoCliente()" class="px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-xl font-medium transition-colors">
+          Cancelar
+        </button>
+        <button (click)="guardarNuevoCliente()" class="bg-sagrada-purple hover:bg-sagrada-purple-dark text-white px-6 py-2.5 rounded-xl shadow-md shadow-purple-200 font-semibold transition-all transform hover:-translate-y-0.5">
+          {{ esModoEdicion ? 'Guardar Cambios' : 'Guardar Cliente' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: REDACTAR CORREO -->
+<div *ngIf="mostrarModalCorreo" class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 animate-fade-in-up">
+  <div class="bg-white w-full max-w-xl rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+    
+    <!-- Header Decorativo -->
+    <div class="h-2 bg-gradient-to-r from-sagrada-purple via-sagrada-gold to-sagrada-purple"></div>
+    
+    <button (click)="cerrarModalCorreo()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+
+    <div class="p-10">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-14 h-14 bg-sagrada-purple/10 text-sagrada-purple rounded-2xl flex items-center justify-center shadow-inner">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-black text-slate-800 tracking-tight">Enviar Correo</h2>
+          <p class="text-sm text-slate-500 font-medium">Destinatario: <span class="text-sagrada-purple font-bold">{{ datosCorreo.to }}</span></p>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="relative group">
+          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Asunto del Mensaje</label>
+          <input type="text" [(ngModel)]="datosCorreo.subject" placeholder="Ej: Información de pedido #123"
+            class="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-sagrada-purple focus:ring-4 focus:ring-sagrada-purple/5 outline-none bg-slate-50/50 transition-all font-semibold text-slate-700">
+        </div>
+
+        <div class="relative group">
+          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Cuerpo del Correo</label>
+          <textarea [(ngModel)]="datosCorreo.body" rows="6" placeholder="Escribe el contenido aquí..."
+            class="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-sagrada-purple focus:ring-4 focus:ring-sagrada-purple/5 outline-none bg-slate-50/50 transition-all font-medium text-slate-600 resize-none"></textarea>
+        </div>
+
+        <div class="pt-4 flex items-center gap-4">
+          <button (click)="cerrarModalCorreo()" class="flex-1 px-6 py-4 rounded-2xl text-slate-500 font-bold hover:bg-slate-50 transition-colors">
+            Cancelar
+          </button>
+          <button (click)="enviarCorreo()" [disabled]="enviandoCorreo"
+            class="flex-[2] bg-sagrada-purple hover:bg-sagrada-purple-dark text-white font-bold py-4 px-6 rounded-2xl shadow-xl shadow-purple-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50 disabled:transform-none">
+            <span *ngIf="!enviandoCorreo">ENVIAR CORREO</span>
+            <span *ngIf="enviandoCorreo" class="flex items-center gap-2">
+              <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+              ENVIANDO...
+            </span>
+            <svg *ngIf="!enviandoCorreo" class="w-5 h-5 rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

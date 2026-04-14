@@ -1,0 +1,40 @@
+.bg-sagrada-bg {
+    min-height: calc(100vh - 64px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-animate-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* Mejora de contraste para el embudo de ventas */
+.drop-shadow-lg {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6), 0 1px 1px rgba(0,0,0,0.4);
+}
+
+/* Animación de entrada para el embudo */
+.animate-fade-in-down {
+    animation: fadeInDown 0.4s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

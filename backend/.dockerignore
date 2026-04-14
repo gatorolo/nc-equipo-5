@@ -1,0 +1,13 @@
+target/
+*.class
+.git
+.gitignore
+Dockerfile
+.dockerignore
+.vscode/
+.idea/
+*.log
+src/test/
+mvnw
+mvnw.cmd
+.mvn/
