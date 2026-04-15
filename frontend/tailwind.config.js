@@ -19,9 +19,13 @@ module.exports = {
   plugins: [],
   safelist: [
     'bg-blue-600',
+    'bg-blue-400',
     'bg-amber-500',
+    'bg-amber-400',
     'bg-purple-600',
+    'bg-purple-400',
     'bg-emerald-600',
+    'bg-emerald-400',
     'bg-rose-500',
     'bg-slate-500',
     'from-blue-500', 'to-blue-600',

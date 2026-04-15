@@ -248,8 +248,15 @@ export class KanbanBoardComponent implements OnInit {
   cargarTratos() {
     this.dataService.getTratos().subscribe({
       next: (data: Trato[]) => {
-        // Limpiar para recargar
-        this.columnas.forEach(col => this.tratosPorEtapa[col.nombre] = []);
+        // Limpiar mutando el array existente sin perder la referencia
+        this.columnas.forEach(col => {
+          if (this.tratosPorEtapa[col.nombre]) {
+            this.tratosPorEtapa[col.nombre].length = 0;
+          } else {
+            this.tratosPorEtapa[col.nombre] = [];
+          }
+        });
+        
         data.forEach(trato => {
           if (this.tratosPorEtapa[trato.etapa]) {
             this.tratosPorEtapa[trato.etapa].push(trato);
