@@ -26,9 +26,20 @@ export class DataService {
   private tratosSubject = new BehaviorSubject<Trato[]>([]);
   public tratos$ = this.tratosSubject.asObservable();
 
+  private kpisSubject = new BehaviorSubject<Kpi[]>([]);
+  public kpis$ = this.kpisSubject.asObservable();
+
   constructor(private http: HttpClient) { 
     this.refreshClientes();
     this.refreshTratos();
+    this.refreshKpis();
+  }
+
+  refreshKpis() {
+    this.http.get<Kpi[]>(`${this.apiUrl}/kpis`).subscribe({
+      next: data => this.kpisSubject.next(data),
+      error: err => console.error('Error al cargar KPIs:', err)
+    });
   }
 
   refreshClientes() {
@@ -49,19 +60,28 @@ export class DataService {
 
   addCliente(nuevoCliente: Cliente): Observable<Cliente> {
     return this.http.post<Cliente>(`${this.apiUrl}/clientes`, nuevoCliente).pipe(
-      tap(() => this.refreshClientes())
+      tap(() => {
+        this.refreshClientes();
+        this.refreshKpis();
+      })
     );
   }
 
   updateCliente(actualizado: Cliente): Observable<Cliente> {
     return this.http.put<Cliente>(`${this.apiUrl}/clientes/${actualizado.id}`, actualizado).pipe(
-      tap(() => this.refreshClientes())
+      tap(() => {
+        this.refreshClientes();
+        this.refreshKpis();
+      })
     );
   }
 
   deleteCliente(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/clientes/${id}`).pipe(
-      tap(() => this.refreshClientes())
+      tap(() => {
+        this.refreshClientes();
+        this.refreshKpis();
+      })
     );
   }
 
@@ -82,15 +102,30 @@ export class DataService {
   }
 
   addTrato(nuevo: Trato): Observable<Trato> {
-    return this.http.post<Trato>(`${this.apiUrl}/tratos`, nuevo).pipe(tap(() => this.refreshTratos()));
+    return this.http.post<Trato>(`${this.apiUrl}/tratos`, nuevo).pipe(
+      tap(() => {
+        this.refreshTratos();
+        this.refreshKpis();
+      })
+    );
   }
 
   updateTratoEtapa(id: string, etapa: EtapaTrato): Observable<Trato> {
-    return this.http.put<Trato>(`${this.apiUrl}/tratos/${id}/etapa`, { etapa }).pipe(tap(() => this.refreshTratos()));
+    return this.http.put<Trato>(`${this.apiUrl}/tratos/${id}/etapa`, { etapa }).pipe(
+      tap(() => {
+        this.refreshTratos();
+        this.refreshKpis();
+      })
+    );
   }
 
   deleteTrato(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/tratos/${id}`, { responseType: 'text' }).pipe(tap(() => this.refreshTratos()));
+    return this.http.delete(`${this.apiUrl}/tratos/${id}`, { responseType: 'text' }).pipe(
+      tap(() => {
+        this.refreshTratos();
+        this.refreshKpis();
+      })
+    );
   }
 
   getDashboardAnalytics(): Observable<any> {
@@ -98,7 +133,7 @@ export class DataService {
   }
 
   getKpis(): Observable<Kpi[]> {
-    return this.http.get<Kpi[]>(`${this.apiUrl}/kpis`);
+    return this.kpis$;
   }
 
   setBusquedaGlobal(term: string) {
