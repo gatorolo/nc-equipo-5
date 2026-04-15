@@ -54,4 +54,9 @@ jobs:
           --region ${{ env.REGION }} \
           --platform managed \
           --allow-unauthenticated \
-          --set-env-vars "SPRING_DATASOURCE_URL=${{ secrets.DB_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USER }},SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }},JWT_SECRET=${{ secrets.JWT_SECRET }}"
+          --memory 1Gi \
+          --cpu 1 \
+          --timeout 300 \
+          --min-instances 0 \
+          --max-instances 2 \
+          --set-env-vars "SPRING_DATASOURCE_URL=${{ secrets.DB_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USER }},SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }},JWT_SECRET=${{ secrets.JWT_SECRET }},JAVA_TOOL_OPTIONS=-XX:MaxRAMPercentage=75.0"
