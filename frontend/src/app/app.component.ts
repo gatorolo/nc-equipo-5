@@ -284,8 +284,15 @@ export class AppComponent implements OnInit {
     if (this.mostrarMenuPerfil) this.mostrarMenuPerfil = false;
   }
 
+  // Actualizado: cerrar lista al marcar todo como leido, o solo marcar local.
   marcarTodoLeido() {
     this.notifService.markAllAsRead();
+  }
+
+  marcarNotificacionLeida(notif: AppNotification) {
+    if (!notif.read) {
+      this.notifService.markAsRead(notif.id);
+    }
   }
 
   limpiarNotificaciones() {

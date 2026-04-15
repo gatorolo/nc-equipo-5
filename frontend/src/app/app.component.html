@@ -126,7 +126,8 @@
               </div>
 
               <div *ngFor="let notif of notifications"
-                class="p-4 hover:bg-slate-50 transition-colors flex gap-3 text-left"
+                (click)="marcarNotificacionLeida(notif)"
+                class="p-4 hover:bg-slate-50 transition-colors flex gap-3 text-left cursor-pointer"
                 [class.bg-sagrada-bg]="!notif.read">
                 <div class="mt-1 flex-shrink-0">
                   <span class="flex h-2 w-2 relative">
