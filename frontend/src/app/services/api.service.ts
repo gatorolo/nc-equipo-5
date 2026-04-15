@@ -9,7 +9,7 @@ import { Cliente, Kpi, Trato, EtapaTrato, PipelineStage } from '../models/models
 })
 export class DataService {
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'https://crm-backend-cg74godk6q-uc.a.run.app/api';
 
   private clientesSubject = new BehaviorSubject<Cliente[]>([]);
   public clientes$ = this.clientesSubject.asObservable();
@@ -89,8 +89,8 @@ export class DataService {
     return this.http.put<Trato>(`${this.apiUrl}/tratos/${id}/etapa`, { etapa }).pipe(tap(() => this.refreshTratos()));
   }
 
-  deleteTrato(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/tratos/${id}`).pipe(tap(() => this.refreshTratos()));
+  deleteTrato(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/tratos/${id}`, { responseType: 'text' }).pipe(tap(() => this.refreshTratos()));
   }
 
   getDashboardAnalytics(): Observable<any> {

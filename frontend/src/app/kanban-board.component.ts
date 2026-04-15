@@ -409,6 +409,7 @@ export class KanbanBoardComponent implements OnInit {
             Swal.fire('¡Eliminado!', 'El trato ha sido removido del pipeline.', 'success');
           },
           error: (err) => {
+            console.error('Error al borrar trato:', err);
             Swal.fire('Error', 'Hubo un problema al intentar eliminar el trato.', 'error');
           }
         });
