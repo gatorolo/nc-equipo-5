@@ -23,16 +23,21 @@ public class SecurityConfig {
     public org.springframework.boot.web.servlet.FilterRegistrationBean<org.springframework.web.filter.CorsFilter> corsFilterRegistration() {
         org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
         org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
+
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(java.util.List.of("http://localhost:4200", "http://127.0.0.1:4200"));
+        
+        config.setAllowedOrigins(java.util.List.of(
+                "https://crm-enterprise-2100.web.app"
+        ));
+
         config.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setExposedHeaders(java.util.List.of("Authorization"));
         config.setMaxAge(3600L);
         source.registerCorsConfiguration("/**", config);
-        
-        org.springframework.boot.web.servlet.FilterRegistrationBean<org.springframework.web.filter.CorsFilter> bean = 
-            new org.springframework.boot.web.servlet.FilterRegistrationBean<>(new org.springframework.web.filter.CorsFilter(source));
+
+        org.springframework.boot.web.servlet.FilterRegistrationBean<org.springframework.web.filter.CorsFilter> bean =
+                new org.springframework.boot.web.servlet.FilterRegistrationBean<>(new org.springframework.web.filter.CorsFilter(source));
         bean.setOrder(org.springframework.core.Ordered.HIGHEST_PRECEDENCE);
         return bean;
     }
