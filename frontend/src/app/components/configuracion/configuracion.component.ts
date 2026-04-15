@@ -184,29 +184,28 @@ export class ConfiguracionComponent implements OnInit {
       return;
     }
 
-    // 1. Mostrar preview inmediato
+    // 1. Mostrar preview y guardar base64
     const reader = new FileReader();
     reader.onload = () => {
       this.perfil.avatar = reader.result as string;
+      this.dataService.setAvatarAdmin(this.perfil.avatar);
+      
+      // Auto-guardar el perfil para persistir el nuevo avatar
+      this.dataService.updateProfile(this.perfil).subscribe({
+        next: () => {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Foto de perfil actualizada',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        },
+        error: () => Swal.fire('Error', 'No se pudo guardar la imagen de perfil.', 'error')
+      });
     };
     reader.readAsDataURL(archivo);
-
-    // 2. Subir archivo real al servidor
-    this.dataService.uploadAvatar(archivo).subscribe({
-      next: (res) => {
-        this.perfil.avatar = res.url;
-        this.dataService.setAvatarAdmin(res.url);
-        Swal.fire({
-          toast: true,
-          position: 'top-end',
-          icon: 'success',
-          title: 'Foto de perfil subida al servidor',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      },
-      error: () => Swal.fire('Error', 'No se pudo subir la imagen al servidor', 'error')
-    });
   }
 
   guardarEmpresa(): void {
