@@ -1,11 +1,5 @@
 package com.crm.enterprise.config;
 
-import com.crm.enterprise.entity.Client;
-import com.crm.enterprise.entity.Deal;
-import com.crm.enterprise.entity.Notification;
-import com.crm.enterprise.repository.ClientRepository;
-import com.crm.enterprise.repository.DealRepository;
-import com.crm.enterprise.repository.NotificationRepository;
 import com.crm.enterprise.repository.PipelineStageRepository;
 import com.crm.enterprise.entity.PipelineStage;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +14,6 @@ import java.util.List;
 public class DataSeeder implements CommandLineRunner {
 
     private final PipelineStageRepository stageRepository;
-    private final ClientRepository clientRepository;
-    private final DealRepository dealRepository;
-    private final NotificationRepository notificationRepository;
     private final com.crm.enterprise.repository.UserRepository userRepository;
     private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
@@ -50,79 +41,6 @@ public class DataSeeder implements CommandLineRunner {
             System.out.println("DataSeeder: Administrador principal verificado/creado.");
         }
 
-        if (clientRepository.count() == 0) {
-            // Seed Clients
-            Client c1 = Client.builder()
-                    .nombre("Juan Torres")
-                    .empresa("TechCorp")
-                    .email("juan@techcorp.com")
-                    .telefono("555-0101")
-                    .estado(Client.Status.Activo)
-                    .avatarUrl("https://i.pravatar.cc/150?img=11")
-                    .build();
 
-            Client c2 = Client.builder()
-                    .nombre("Maria Gomez")
-                    .empresa("Innovate Inc")
-                    .email("maria@innovate.com")
-                    .telefono("555-0202")
-                    .estado(Client.Status.Activo)
-                    .avatarUrl("https://i.pravatar.cc/150?img=5")
-                    .build();
-
-            clientRepository.saveAll(List.of(c1, c2));
-
-            PipelineStage sPros = stageRepository.findByNombre("Prospecto").get();
-            PipelineStage sNego = stageRepository.findByNombre("Negociación").get();
-            PipelineStage sCerr = stageRepository.findByNombre("Cerrado").get();
-
-            // Seed Deals
-            Deal d1 = Deal.builder()
-                    .nombre("Rediseño Web")
-                    .monto(5000.0)
-                    .etapa(sPros)
-                    .empresa("TechCorp")
-                    .client(c1)
-                    .build();
-
-            Deal d2 = Deal.builder()
-                    .nombre("Sistema Interno CRM")
-                    .monto(12000.0)
-                    .etapa(sNego)
-                    .empresa("Innovate Inc")
-                    .client(c2)
-                    .build();
-
-            Deal d3 = Deal.builder()
-                    .nombre("Auditoría de Seguridad")
-                    .monto(3000.0)
-                    .etapa(sCerr)
-                    .empresa("TechCorp")
-                    .client(c1)
-                    .build();
-
-            dealRepository.saveAll(List.of(d1, d2, d3));
-
-            // Seed Notifications
-            Notification n1 = Notification.builder()
-                    .title("Nuevo Trato Creado")
-                    .message("Se ha creado el trato Rediseño Web")
-                    .type("info")
-                    .isRead(false)
-                    .date(new Date())
-                    .build();
-
-            Notification n2 = Notification.builder()
-                    .title("Reunión Confirmada")
-                    .message("Revisar propuesta para Innovate Inc")
-                    .type("warning")
-                    .isRead(false)
-                    .date(new Date())
-                    .build();
-
-            notificationRepository.saveAll(List.of(n1, n2));
-            
-            System.out.println("DataSeeder: Datos de prueba insertados en la base de datos.");
-        }
     }
 }

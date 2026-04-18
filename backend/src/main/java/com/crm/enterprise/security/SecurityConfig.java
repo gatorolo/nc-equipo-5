@@ -25,7 +25,7 @@ public class SecurityConfig {
         org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
 
         config.setAllowCredentials(true);
-        
+
         config.setAllowedOrigins(java.util.List.of(
                 "https://crm-enterprise-2100.web.app"
         ));
