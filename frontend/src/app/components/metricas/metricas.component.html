@@ -4,18 +4,36 @@
         <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4">
             <div>
                 <h1 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">Analítica & Métricas</h1>
-                <p class="text-slate-500 dark:text-slate-400 mt-1">Rendimiento general del pipeline de ventas interactivo.</p>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">Rendimiento general del pipeline de ventas
+                    interactivo.</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-3 print:hidden">
-                <!-- Filtros rápidos -->
-                <div class="relative group bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-xl flex gap-1 mr-2 xl:mr-4 border border-slate-200 dark:border-slate-700 shadow-inner" role="group" aria-label="Filtros de tiempo para métricas">
-                    <button (click)="cambiarFiltro('todos')" [attr.aria-pressed]="filtroActual === 'todos'" [class.bg-white]="filtroActual === 'todos'" [class.dark:bg-slate-700]="filtroActual === 'todos'" [class.shadow-sm]="filtroActual === 'todos'" [class.text-sagrada-purple-dark]="filtroActual === 'todos'" class="px-3 py-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 rounded-lg transition-all focus:outline-none">Todos</button>
-                    <button (click)="cambiarFiltro('mes_anterior')" [attr.aria-pressed]="filtroActual === 'mes_anterior'" [class.bg-white]="filtroActual === 'mes_anterior'" [class.dark:bg-slate-700]="filtroActual === 'mes_anterior'" [class.shadow-sm]="filtroActual === 'mes_anterior'" [class.text-sagrada-purple-dark]="filtroActual === 'mes_anterior'" class="px-3 py-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 rounded-lg transition-all focus:outline-none">Mes Anterior</button>
-                    <button (click)="cambiarFiltro('este_mes')" [attr.aria-pressed]="filtroActual === 'este_mes'" [class.bg-white]="filtroActual === 'este_mes'" [class.dark:bg-slate-700]="filtroActual === 'este_mes'" [class.shadow-sm]="filtroActual === 'este_mes'" [class.text-sagrada-purple-dark]="filtroActual === 'este_mes'" class="px-3 py-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 rounded-lg transition-all focus:outline-none">Este Mes</button>
-                    
-                    <!-- Tooltip -->
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-3 py-1.5 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
+                <div class="relative group bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-xl flex gap-1 mr-2 xl:mr-4 border border-slate-200 dark:border-slate-700 shadow-inner"
+                    role="group" aria-label="Filtros de tiempo para métricas">
+                    <button (click)="cambiarFiltro('todos')" [attr.aria-pressed]="filtroActual === 'todos'"
+                        [class.bg-white]="filtroActual === 'todos'" [class.dark:bg-slate-700]="filtroActual === 'todos'"
+                        [class.shadow-sm]="filtroActual === 'todos'"
+                        [class.text-sagrada-purple-dark]="filtroActual === 'todos'"
+                        class="px-3 py-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 rounded-lg transition-all focus:outline-none">Todos</button>
+                    <button (click)="cambiarFiltro('mes_anterior')"
+                        [attr.aria-pressed]="filtroActual === 'mes_anterior'"
+                        [class.bg-white]="filtroActual === 'mes_anterior'"
+                        [class.dark:bg-slate-700]="filtroActual === 'mes_anterior'"
+                        [class.shadow-sm]="filtroActual === 'mes_anterior'"
+                        [class.text-sagrada-purple-dark]="filtroActual === 'mes_anterior'"
+                        class="px-3 py-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 rounded-lg transition-all focus:outline-none">Mes
+                        Anterior</button>
+                    <button (click)="cambiarFiltro('este_mes')" [attr.aria-pressed]="filtroActual === 'este_mes'"
+                        [class.bg-white]="filtroActual === 'este_mes'"
+                        [class.dark:bg-slate-700]="filtroActual === 'este_mes'"
+                        [class.shadow-sm]="filtroActual === 'este_mes'"
+                        [class.text-sagrada-purple-dark]="filtroActual === 'este_mes'"
+                        class="px-3 py-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 rounded-lg transition-all focus:outline-none">Este
+                        Mes</button>
+
+                    <div
+                        class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-3 py-1.5 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
                         Filtrar datos por periodo de tiempo
                     </div>
                 </div>
@@ -30,7 +48,8 @@
                         </svg>
                         Imprimir
                     </button>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-3 py-1.5 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
+                    <div
+                        class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-3 py-1.5 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
                         Generar reporte PDF
                     </div>
                 </div>
@@ -44,25 +63,28 @@
                         </svg>
                         Exportar
                     </button>
-                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-3 py-1.5 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
+                    <div
+                        class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-3 py-1.5 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
                         Descargar datos en CSV
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SKELETONS PARA KPIs -->
         <div *ngIf="isLoading" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <div *ngFor="let i of [1,2,3,4]" class="bg-sagrada-paper p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-center h-32 animate-pulse">
+            <div *ngFor="let i of [1,2,3,4]"
+                class="bg-sagrada-paper p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-center h-32 animate-pulse">
                 <div class="h-3 bg-slate-200 rounded w-1/3 mb-3"></div>
                 <div class="h-8 bg-slate-200 rounded w-2/3 mb-3"></div>
-                <div class="flex items-center gap-2"><div class="h-5 bg-slate-200 rounded w-16"></div><div class="h-3 bg-slate-200 rounded w-20"></div></div>
+                <div class="flex items-center gap-2">
+                    <div class="h-5 bg-slate-200 rounded w-16"></div>
+                    <div class="h-3 bg-slate-200 rounded w-20"></div>
+                </div>
             </div>
         </div>
 
         <h2 class="sr-only">Indicadores de Rendimiento Clave</h2>
 
-        <!-- DATOS KPIs -->
         <div *ngIf="!isLoading" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             <div *ngFor="let kpi of displayKpis; let first = first; let i = index"
                 class="card-animate-in relative overflow-hidden bg-sagrada-paper p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all group"
@@ -72,29 +94,42 @@
                 <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full bg-gradient-to-br opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 ease-out"
                     [ngClass]="kpi.color"></div>
 
-                <h3 class="text-xs font-bold uppercase tracking-widest mb-2" [ngClass]="first ? 'text-slate-300' : 'text-slate-500 dark:text-slate-400'">{{ kpi.titulo }}</h3>
-                <p class="text-3xl font-black tracking-tight mb-1" [ngClass]="first ? 'text-white drop-shadow-sm' : 'text-slate-800 dark:text-white'">{{ kpi.valor }}</p>
-                
-                <!-- Tooltip para KPIs específicos -->
-                <div *ngIf="kpi.titulo.includes('TICKET')" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[9px] p-2 rounded shadow-lg z-20 pointer-events-none w-32 border border-slate-700">
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-2"
+                    [ngClass]="first ? 'text-slate-300' : 'text-slate-500 dark:text-slate-400'">{{ kpi.titulo }}</h3>
+                <p class="text-3xl font-black tracking-tight mb-1"
+                    [ngClass]="first ? 'text-white drop-shadow-sm' : 'text-slate-800 dark:text-white'">{{ kpi.valor }}
+                </p>
+
+                <div *ngIf="kpi.titulo.includes('TICKET')"
+                    class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[9px] p-2 rounded shadow-lg z-20 pointer-events-none w-32 border border-slate-700">
                     Ingreso promedio obtenido por cada trato en etapa 'Cerrado'.
                 </div>
-                <div *ngIf="kpi.titulo.includes('TASA')" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[9px] p-2 rounded shadow-lg z-20 pointer-events-none w-32 border border-slate-700">
+                <div *ngIf="kpi.titulo.includes('TASA')"
+                    class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[9px] p-2 rounded shadow-lg z-20 pointer-events-none w-32 border border-slate-700">
                     Porcentaje de eficacia al convertir tratos en ventas finales.
                 </div>
                 <div class="mt-3 flex items-center gap-2">
-                    <span class="text-[11px] font-bold px-2 py-1 rounded-md flex items-center gap-1 shadow-sm transition-colors"
+                    <span
+                        class="text-[11px] font-bold px-2 py-1 rounded-md flex items-center gap-1 shadow-sm transition-colors"
                         [ngClass]="kpi.tendencia > 0 ? (first ? 'bg-emerald-500/30 text-emerald-100' : 'bg-emerald-100 text-emerald-700') : (first ? 'bg-red-500/30 text-red-100' : 'bg-red-100 text-red-600')">
-                        <svg *ngIf="kpi.tendencia > 0" class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                        <svg *ngIf="kpi.tendencia <= 0" class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <svg *ngIf="kpi.tendencia > 0" class="w-3 h-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                        </svg>
+                        <svg *ngIf="kpi.tendencia <= 0" class="w-3 h-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
                         {{ kpi.tendencia }}%
                     </span>
-                    <span class="text-[11px] font-semibold flex-1" [ngClass]="first ? 'text-slate-400' : 'text-slate-400'">vs mes anterior</span>
+                    <span class="text-[11px] font-semibold flex-1"
+                        [ngClass]="first ? 'text-slate-400' : 'text-slate-400'">vs mes anterior</span>
                 </div>
             </div>
         </div>
 
-        <!-- SKELETONS PARA GRÁFICOS -->
         <div *ngIf="isLoading" class="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <div class="bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 p-5 h-72 animate-pulse">
                 <div class="h-5 bg-slate-200 rounded w-1/3 mb-6"></div>
@@ -108,17 +143,36 @@
             <div class="bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 p-5 h-72 animate-pulse">
                 <div class="h-5 bg-slate-200 rounded w-1/3 mb-6"></div>
                 <div class="space-y-5">
-                    <div class="w-full"><div class="flex justify-between mb-2"><div class="h-3 bg-slate-200 w-1/4 rounded"></div><div class="h-3 bg-slate-200 w-1/6 rounded"></div></div><div class="h-2.5 bg-slate-200 rounded-full w-full"></div></div>
-                    <div class="w-full"><div class="flex justify-between mb-2"><div class="h-3 bg-slate-200 w-1/4 rounded"></div><div class="h-3 bg-slate-200 w-1/6 rounded"></div></div><div class="h-2.5 bg-slate-200 rounded-full w-3/4"></div></div>
-                    <div class="w-full"><div class="flex justify-between mb-2"><div class="h-3 bg-slate-200 w-1/4 rounded"></div><div class="h-3 bg-slate-200 w-1/6 rounded"></div></div><div class="h-2.5 bg-slate-200 rounded-full w-1/2"></div></div>
+                    <div class="w-full">
+                        <div class="flex justify-between mb-2">
+                            <div class="h-3 bg-slate-200 w-1/4 rounded"></div>
+                            <div class="h-3 bg-slate-200 w-1/6 rounded"></div>
+                        </div>
+                        <div class="h-2.5 bg-slate-200 rounded-full w-full"></div>
+                    </div>
+                    <div class="w-full">
+                        <div class="flex justify-between mb-2">
+                            <div class="h-3 bg-slate-200 w-1/4 rounded"></div>
+                            <div class="h-3 bg-slate-200 w-1/6 rounded"></div>
+                        </div>
+                        <div class="h-2.5 bg-slate-200 rounded-full w-3/4"></div>
+                    </div>
+                    <div class="w-full">
+                        <div class="flex justify-between mb-2">
+                            <div class="h-3 bg-slate-200 w-1/4 rounded"></div>
+                            <div class="h-3 bg-slate-200 w-1/6 rounded"></div>
+                        </div>
+                        <div class="h-2.5 bg-slate-200 rounded-full w-1/2"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- DATOS GRÁFICOS -->
         <div *ngIf="!isLoading" class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 p-5 z-10" style="animation-delay: 200ms;">
-                <h2 class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 mb-4 flex items-center gap-2">
+            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 p-5 z-10"
+                style="animation-delay: 200ms;">
+                <h2
+                    class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 mb-4 flex items-center gap-2">
                     <svg class="w-5 h-5 text-sagrada-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z">
@@ -130,17 +184,23 @@
                     <div *ngFor="let etapa of etapasFunnel; let i = index"
                         class="relative transition-all duration-300 rounded-lg py-2.5 px-4 text-center hover:scale-[1.03] group cursor-pointer shadow-sm hover:shadow-md"
                         [ngClass]="etapa.color" [style.width.%]="getFunnelWidth(i)" [style.opacity]="0.85 + (i * 0.05)">
-                        
-                        <!-- Tooltip -->
-                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-xs font-bold py-1.5 px-3 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+
+                        <div
+                            class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-xs font-bold py-1.5 px-3 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                             {{ etapa.cantidad }} tratos • ${{ etapa.monto | number:'1.0-0' }}
-                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div>
+                            <div
+                                class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45">
+                            </div>
                         </div>
 
                         <div class="flex justify-between items-center text-white drop-shadow-lg gap-2 overflow-hidden">
-                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-tighter truncate shrink-0">{{ etapa.nombre }}</span>
+                            <span
+                                class="text-[11px] sm:text-xs font-bold uppercase tracking-tighter truncate shrink-0">{{
+                                etapa.nombre }}</span>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <span class="hidden sm:inline-block text-[10px] font-bold bg-black/20 px-1.5 py-0.5 rounded">{{ etapa.cantidad }} tratos</span>
+                                <span
+                                    class="hidden sm:inline-block text-[10px] font-bold bg-black/20 px-1.5 py-0.5 rounded">{{
+                                    etapa.cantidad }} tratos</span>
                                 <span class="text-base font-black">{{ etapa.porcentaje }}%</span>
                             </div>
                         </div>
@@ -148,10 +208,14 @@
                 </div>
             </div>
 
-            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 p-5" style="animation-delay: 300ms;">
-                <h2 class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 mb-4 flex items-center gap-2">
+            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 p-5"
+                style="animation-delay: 300ms;">
+                <h2
+                    class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 mb-4 flex items-center gap-2">
                     <svg class="w-5 h-5 text-sagrada-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
                     </svg>
                     Distribución del Pipeline
                 </h2>
@@ -160,20 +224,24 @@
                         <div class="flex justify-between items-center mb-2">
                             <div class="flex items-center gap-2">
                                 <span class="w-3.5 h-3.5 rounded-sm shadow-sm" [ngClass]="etapa.color"></span>
-                                <span class="text-sm font-bold text-slate-700 dark:text-slate-300 group-hover:text-sagrada-purple-dark dark:group-hover:text-white transition-colors">{{ etapa.nombre }}</span>
+                                <span
+                                    class="text-sm font-bold text-slate-700 dark:text-slate-300 group-hover:text-sagrada-purple-dark dark:group-hover:text-white transition-colors">{{
+                                    etapa.nombre }}</span>
                             </div>
-                            <span class="text-sm font-black text-slate-800 dark:text-white">${{ etapa.monto | number:'1.0-0' }}</span>
+                            <span class="text-sm font-black text-slate-800 dark:text-white">${{ etapa.monto |
+                                number:'1.0-0' }}</span>
                         </div>
-                        
+
                         <!-- Tooltip -->
-                        <div class="absolute -top-8 right-0 bg-slate-800 text-white text-xs font-bold py-1 px-2.5 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                        <div
+                            class="absolute -top-8 right-0 bg-slate-800 text-white text-xs font-bold py-1 px-2.5 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
                             {{ etapa.porcentaje }}% del total
                         </div>
 
-                        <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden shadow-inner flex items-center">
+                        <div
+                            class="w-full bg-slate-100 rounded-full h-3 overflow-hidden shadow-inner flex items-center">
                             <div class="h-full rounded-full transition-all duration-1000 ease-out"
-                                [ngClass]="etapa.color" 
-                                [style.width.%]="getBarWidth(etapa.monto)">
+                                [ngClass]="etapa.color" [style.width.%]="getBarWidth(etapa.monto)">
                             </div>
                         </div>
                     </div>
@@ -182,51 +250,97 @@
         </div>
 
         <div *ngIf="!isLoading" class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 overflow-hidden" style="animation-delay: 400ms;">
-                <div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
-                    <h2 class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-sagrada-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+                style="animation-delay: 400ms;">
+                <div
+                    class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+                    <h2
+                        class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-sagrada-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
                         Top 5 Oportunidades
                     </h2>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead>
-                            <tr class="bg-slate-50 dark:bg-slate-800/80 text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                                <th class="px-6 py-3 font-bold">#</th><th class="px-6 py-3 font-bold">Trato</th><th class="px-6 py-3 font-bold">Empresa</th><th class="px-6 py-3 font-bold">Etapa</th><th class="px-6 py-3 font-bold text-right">Monto</th>
+                            <tr
+                                class="bg-slate-50 dark:bg-slate-800/80 text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 font-bold">#</th>
+                                <th class="px-6 py-3 font-bold">Trato</th>
+                                <th class="px-6 py-3 font-bold">Empresa</th>
+                                <th class="px-6 py-3 font-bold">Etapa</th>
+                                <th class="px-6 py-3 font-bold text-right">Monto</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                            <tr *ngFor="let trato of topTratos; let i = index" class="hover:bg-sagrada-bg transition-colors group">
-                                <td class="px-4 py-3"><span class="w-6 h-6 rounded-md bg-sagrada-purple/10 text-sagrada-purple inline-flex items-center justify-center text-xs font-black">{{ i + 1 }}</span></td>
-                                <td class="px-4 py-3 font-bold text-sagrada-purple-dark dark:text-slate-200 group-hover:text-sagrada-purple transition-colors">{{ trato.nombre }}</td>
-                                <td class="px-4 py-3 text-slate-500 dark:text-slate-400 font-medium">{{ trato.empresa }}</td>
-                                <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider shadow-sm" [ngClass]="getEtapaBadgeClass(trato.etapa)">{{ trato.etapa }}</span></td>
-                                <td class="px-4 py-3 text-right font-black text-slate-800 dark:text-white">{{ trato.monto | currency:'USD':'symbol':'1.0-0' }}</td>
+                            <tr *ngFor="let trato of topTratos; let i = index"
+                                class="hover:bg-sagrada-bg transition-colors group">
+                                <td class="px-4 py-3"><span
+                                        class="w-6 h-6 rounded-md bg-sagrada-purple/10 text-sagrada-purple inline-flex items-center justify-center text-xs font-black">{{
+                                        i + 1 }}</span></td>
+                                <td
+                                    class="px-4 py-3 font-bold text-sagrada-purple-dark dark:text-slate-200 group-hover:text-sagrada-purple transition-colors">
+                                    {{ trato.nombre }}</td>
+                                <td class="px-4 py-3 text-slate-500 dark:text-slate-400 font-medium">{{ trato.empresa }}
+                                </td>
+                                <td class="px-4 py-3"><span
+                                        class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider shadow-sm"
+                                        [ngClass]="getEtapaBadgeClass(trato.etapa)">{{ trato.etapa }}</span></td>
+                                <td class="px-4 py-3 text-right font-black text-slate-800 dark:text-white">{{
+                                    trato.monto | currency:'USD':'symbol':'1.0-0' }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 overflow-hidden" style="animation-delay: 500ms;">
-                 <div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
-                    <h2 class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-sagrada-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <div class="card-animate-in bg-sagrada-paper rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+                style="animation-delay: 500ms;">
+                <div
+                    class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+                    <h2
+                        class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-sagrada-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
                         Clientes Más Activos
                     </h2>
                 </div>
                 <div class="divide-y divide-slate-100 dark:divide-slate-800">
-                    <div *ngFor="let item of clientesActivos; let i = index" class="flex items-center justify-between px-5 py-3 hover:bg-sagrada-bg transition-colors group hover:shadow-inner cursor-pointer">
-                        <div class="flex items-center gap-3"><div class="relative"><img [src]="item.cliente.avatar" [alt]="item.cliente.nombre" class="w-10 h-10 rounded-full shadow-sm border-2 border-white dark:border-slate-700 group-hover:border-sagrada-purple transition-colors"><span class="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-sagrada-purple text-white text-[10px] font-black flex items-center justify-center shadow-sm">{{ i + 1 }}</span></div><div><p class="font-bold text-sagrada-purple-dark dark:text-slate-100 text-sm leading-tight group-hover:text-sagrada-purple transition-colors">{{ item.cliente.nombre }}</p><p class="text-xs text-slate-400 font-bold uppercase tracking-wider">{{ item.cliente.empresa }}</p></div></div>
-                        <div class="text-right"><p class="text-sm font-black text-slate-800 dark:text-white">{{ item.cantidadTratos }} trato{{ item.cantidadTratos > 1 ? 's' : '' }}</p><p class="text-xs text-slate-400 font-semibold">${{ item.montoTotal | number:'1.0-0' }}</p></div>
+                    <div *ngFor="let item of clientesActivos; let i = index"
+                        class="flex items-center justify-between px-5 py-3 hover:bg-sagrada-bg transition-colors group hover:shadow-inner cursor-pointer">
+                        <div class="flex items-center gap-3">
+                            <div class="relative"><img [src]="item.cliente.avatar" [alt]="item.cliente.nombre"
+                                    class="w-10 h-10 rounded-full shadow-sm border-2 border-white dark:border-slate-700 group-hover:border-sagrada-purple transition-colors"><span
+                                    class="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-sagrada-purple text-white text-[10px] font-black flex items-center justify-center shadow-sm">{{
+                                    i + 1 }}</span></div>
+                            <div>
+                                <p
+                                    class="font-bold text-sagrada-purple-dark dark:text-slate-100 text-sm leading-tight group-hover:text-sagrada-purple transition-colors">
+                                    {{ item.cliente.nombre }}</p>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">{{
+                                    item.cliente.empresa }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-black text-slate-800 dark:text-white">{{ item.cantidadTratos }}
+                                trato{{ item.cantidadTratos > 1 ? 's' : '' }}</p>
+                            <p class="text-xs text-slate-400 font-semibold">${{ item.montoTotal | number:'1.0-0' }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- TIMELINE -->
-        <div *ngIf="!isLoading" class="card-animate-in bg-sagrada-paper dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 mt-2 overflow-hidden" style="animation-delay: 600ms;">
+
+        <div *ngIf="!isLoading"
+            class="card-animate-in bg-sagrada-paper dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 mt-2 overflow-hidden"
+            style="animation-delay: 600ms;">
             <h2 class="text-base font-bold text-sagrada-purple-dark dark:text-slate-100 mb-6 flex items-center gap-2">
                 <svg class="w-5 h-5 text-sagrada-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -236,18 +350,20 @@
             </h2>
 
             <div class="relative space-y-0">
-                <!-- Línea vertical conectora -->
                 <div class="absolute left-4 top-2 bottom-2 w-0.5 bg-slate-200 dark:bg-slate-800"></div>
 
-                <div *ngFor="let act of actividades; let last = last" class="relative flex items-center gap-4 pb-4 group" [title]="act.descripcion">
-                    <div
-                        class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 group-hover:border-sagrada-purple group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(105,74,126,0.8),0_0_10px_rgba(105,74,126,0.4)] transition-all duration-300 flex items-center justify-center text-sm z-10 flex-shrink-0 shadow-sm"
+                <div *ngFor="let act of actividades; let last = last"
+                    class="relative flex items-center gap-4 pb-4 group" [title]="act.descripcion">
+                    <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 group-hover:border-sagrada-purple group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(105,74,126,0.8),0_0_10px_rgba(105,74,126,0.4)] transition-all duration-300 flex items-center justify-center text-sm z-10 flex-shrink-0 shadow-sm"
                         [title]="'Icono: ' + act.icono">
                         {{ act.icono }}
                     </div>
                     <div class="group-hover:translate-x-1 transition-transform cursor-help">
-                        <p class="text-[13px] text-slate-700 dark:text-slate-100 font-bold leading-tight line-clamp-1">{{ act.descripcion }}</p>
-                        <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 font-black uppercase tracking-widest">{{ act.fecha }}</p>
+                        <p class="text-[13px] text-slate-700 dark:text-slate-100 font-bold leading-tight line-clamp-1">
+                            {{ act.descripcion }}</p>
+                        <p
+                            class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 font-black uppercase tracking-widest">
+                            {{ act.fecha }}</p>
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@ export interface WhatsAppPayload {
 })
 export class NotificationService {
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'https://crm-backend-cg74godk6q-uc.a.run.app/api';
 
   private notificationsSource = new BehaviorSubject<AppNotification[]>([]);
   public notifications$ = this.notificationsSource.asObservable();

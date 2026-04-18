@@ -12,7 +12,7 @@ export interface LoginPayload {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://crm-backend-cg74godk6q-uc.a.run.app/api/auth';
 
   constructor(private http: HttpClient) { }
 

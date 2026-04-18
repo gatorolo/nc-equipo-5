@@ -11,21 +11,14 @@ import { AppComponent } from './app.component';
 import { ClienteListComponent } from './cliente-list.component';
 import { KanbanBoardComponent } from './kanban-board.component';
 import { HomeComponent } from './components/home/home.component';
-import { PhonePipe } from './pipes/phone.pipe';
-import { DirectorioComponent } from './components/directorio/directorio.component';
-import { MetricasComponent } from './components/metricas/metricas.component';
-import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+
 import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
     ClienteListComponent,
     KanbanBoardComponent,
-    HomeComponent,
-    PhonePipe,
-    DirectorioComponent,
-    MetricasComponent,
-    ConfiguracionComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
