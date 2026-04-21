@@ -3,6 +3,8 @@ package com.crm.enterprise.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,6 +36,7 @@ public class Deal {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"deals", "hibernateLazyInitializer", "handler"})
     private Client client;
 }
